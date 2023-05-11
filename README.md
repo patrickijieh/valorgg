@@ -1,5 +1,5 @@
 # valorgg
 Valorant Match Tracking Web App
 
-# Credits
+## Credits
 Made by Patrick Ijieh (May 2023).

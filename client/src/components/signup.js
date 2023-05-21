@@ -2,10 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 function signup(props) {
 
-    useEffect(() => {
-        document.title = "VALORGG - Register";
-      }, []);
-
     const [enteredUser, setEnteredUser] = useState("");
 
     const [enteredPass, setEnteredPass] = useState("");
@@ -17,30 +13,28 @@ function signup(props) {
     const passConfirmErrMsg = React.useRef(null);
     const formErrMsg = React.useRef(null);
 
-    const changePage = () => {
+    useEffect(() => {
+        document.title = "VALORGG - Register";
+      }, []);
 
+    const changePage = (event) => {
+        event.preventDefault();
         updateRegister();
         updateLogin();
-
     }
 
     const handleUser = (e) => {
-
         setEnteredUser(e.target.value);
         userErrMsg.current.innerHTML = "";
-
     }
 
     const handlePass = (e) => {
-
         setEnteredPass(e.target.value);
         passErrMsg.current.innerHTML = "";
         passConfirmErrMsg.current.innerHTML = "";
-
     }
 
     const handlePassConfirm = (e) => {
-
         setEnteredPassCofirm(e.target.value);
         passErrMsg.current.innerHTML = "";
         passConfirmErrMsg.current.innerHTML = "";
@@ -52,10 +46,10 @@ function signup(props) {
     }
 
     const signUpPressed = () => {
-
-        if(enteredUser == "test")
+        if (enteredUser == "test")
         {
-            createUser();
+            updateRegister();
+            goDash();
         }
 
         if (enteredUser == "" || enteredPass == "" || enteredPassConfirm == "")
@@ -97,7 +91,6 @@ function signup(props) {
     }
 
     const createUser = async () => {
-
         const requestData = 
         {
             method: 'POST',
@@ -113,40 +106,32 @@ function signup(props) {
                 }
                 return response.json();
 
-            }, (err) => {
-                console.log(err);
             })
             .then( (data) => {
                 getUser(data);
                 updateRegister();
                 goDash();
 
-            }, (err) => {
+            })
+            .catch( (err) => {
                 formErrMsg.current.innerHTML = "Username already exists!";
                 userErrMsg.current.innerHTML = "Username is currently in use!";
             });
     }
 
     const updateLogin = () => {
-
         props.updateLogin(true);
-
     }
 
     const updateRegister = () => {
-
         props.updateRegister(false);
-
     }
 
-    const goDash = () => {
-            
+    const goDash = () => {   
         props.goDash(true);
-
     }
 
     return (
-
         <div className="d-flex flex-column text-light justify-content-center align-items-center border border-dark rounded p-5 bg-dark">
             <h1 className="h1 px-5">Create Account</h1>
             <form className="w-100">
@@ -176,12 +161,11 @@ function signup(props) {
 
                     <p ref={formErrMsg} className="text-danger text-center"></p>
 
-                    <a href="#" onClick= {changePage} className="text-primary py-4 text-center">Already have an account? Log in here</a>
+                    <a href="" onClick= {changePage} className="text-primary py-4 text-center">Already have an account? Log in here</a>
                 </div>
 
             </form>
         </div>
-
     );
 }
 

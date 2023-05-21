@@ -27,3 +27,5 @@ function cookies(props){
 
     return false;
 }
+
+export default cookies;

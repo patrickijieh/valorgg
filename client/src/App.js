@@ -1,19 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Login from './components/login.js';
 import Register from './components/signup.js';
-import Dashboard from './components/dashboard.js';
-import logo from './valorantgg icon.png'
+import Dashboard from './components/dashboard/dashboard.js';
+import logo from './valorantgg icon.png';
 
 function App() {
 
   const [doLogin, setLogin] = useState(false);
   const [doRegister, setRegister] = useState(false);
   const [doDash, setDash] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    console.log(userData.username);
+    if (userData)
+    {
+      console.log(userData.username);
+    }
   }, [userData]);
 
   const pressLogin = () => {
@@ -24,7 +27,8 @@ function App() {
     setRegister(true);
   }
 
-  const pressDashboard = () => {
+  const pressDashboard = (event) => {
+    event.preventDefault();
     setLogin(false);
     setRegister(false);
     setDash(true);
@@ -42,7 +46,8 @@ function App() {
     setDash(boolDash);
   }
 
-  const pressHome = () => {
+  const pressHome = (event) => {
+    event.preventDefault();
     setLogin(false);
     setRegister(false);
     setDash(false);
@@ -55,24 +60,43 @@ function App() {
     setUserData(user);
   }
 
+  const updateUserData = (data) => {
+    setUserData(data);
+}
+
   return (
 
-    // APP BACKGROUND & NAVBAR
+    /* APP BACKGROUND & NAVBAR */
     <div className="App-bgimage min-vw-100 min-vh-100">
       <div className="d-flex flex-column text-light">
 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3">
 
-          <a className="navbar-brand" href="#" onClick={ pressHome }>VALORGG</a>
+          <a className="navbar-brand" href="" onClick={pressHome}>VALORGG</a>
 
-          <ul className="navbar-nav mr-auto">
+          <ul className="navbar-nav px-2">
             <li className="nav-item active">
-              <a className="nav-link" href="#" onClick={ pressHome }>Home</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#" onClick={ pressDashboard }>Dashboard</a>
+              <a className="nav-link" href="" onClick={pressHome}>Home</a>
             </li>
           </ul>
+
+          <ul className="navbar-nav mr-auto flex-fill">
+            <li className="nav-item">
+              <a className="nav-link" href="" onClick={pressDashboard}>Dashboard</a>
+            </li>
+          </ul>
+
+          {/* LOGOUT BUTTON (only appears if user is logged in)*/}
+          {
+            userData ? (
+            <ul className="navbar-nav px-1">
+              <li className="nav-item justify-content-end">
+                <div className="flex-fill">
+                  <a className="nav-link" href="" onClick={pressHome}>Logout</a>
+                </div>
+             </li>
+            </ul>) : (false)
+          }
 
         </nav>
 
@@ -83,7 +107,7 @@ function App() {
       !doRegister ? (
         !doDash ? (
 
-            // HOME PAGE
+            /* HOME PAGE */
             <div className="d-flex flex-column text-light justify-content-center align-items-center border border-dark rounded p-5 bg-dark" >
               <h1 className="h2">VALORGG</h1>
               <h3 className="h6 py-4">Track the match history of any Valorant account</h3>
@@ -91,11 +115,11 @@ function App() {
               <img src={logo} className="img-fluid w-25 h-25" alt="ValorGG Logo"/>
 
               <div>
-                <button className="btn btn-danger px-4 m-3" onClick = { pressLogin }>
+                <button className="btn btn-danger px-4 m-3" onClick = {pressLogin}>
                   Login
                 </button>
 
-                <button className="btn btn-danger px-4 m-3" onClick = { pressRegister }>
+                <button className="btn btn-danger px-4 m-3" onClick = {pressRegister}>
                   Sign Up
                 </button>
               </div>
@@ -103,18 +127,18 @@ function App() {
 
     ) : (
 
-      // DASHBOARD PAGE
-      < Dashboard userData = { userData }/>
+      /* DASHBOARD PAGE */
+      <Dashboard userData={userData} updateUserData={updateUserData}/>
 
     ) ) : ( 
 
-      // REGISTER PAGE
-    < Register updateRegister={ updateRegister } updateLogin={ updateLogin } goDash={ goDash } getUser={ getUser } />
+      /* REGISTER PAGE */
+    <Register updateRegister={updateRegister} updateLogin={updateLogin} goDash={goDash} getUser={getUser} />
 
     ) ) : (
 
-      // LOGIN PAGE
-    < Login updateLogin={ updateLogin } updateRegister={ updateRegister } goDash={ goDash } getUser={ getUser }/>
+      /* LOGIN PAGE */
+    <Login updateLogin={updateLogin} updateRegister={updateRegister} goDash={goDash} getUser={getUser}/>
 
     ) }
 
@@ -131,9 +155,7 @@ function App() {
         </footer>
       </div>
     </div>
-
   );
-
 }
 
 export default App;

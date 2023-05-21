@@ -1,26 +1,23 @@
-import { set } from 'mongoose';
 import React, { useState, useEffect } from 'react';
 
 function login(props) {
-
-    useEffect(() => {
-        document.title = "VALORGG - Login";
-      }, []);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const formErrMsg = React.useRef(null);
 
-    const changePage = () => {
+    useEffect(() => {
+        document.title = "VALORGG - Login";
+      }, []);
 
+    const changePage = (event) => {
+        event.preventDefault();
         updateLogin();
         updateRegister();
-
     }
 
     const handleUser = (e) => {
-
         setUsername(e.target.value);
         formErrMsg.current.innerHTML = "";
 
@@ -71,8 +68,9 @@ function login(props) {
                 updateLogin();
                 goDash();
 
-            }, (error) => {
-                console.log(error);
+            })
+            .catch ( (err) => {
+                console.log(err);
                 formErrMsg.current.innerHTML = "Username or password is incorrect.";
             })
     }
@@ -105,7 +103,7 @@ function login(props) {
     return (
 
         <div className="d-flex flex-column text-light justify-content-center align-items-center border border-dark rounded p-5 bg-dark">
-            <h1 className="h1"> Login </h1>
+            <h1 className="h1">Login</h1>
             <form>
 
                 <div className="form-group m-3">
@@ -126,7 +124,7 @@ function login(props) {
 
                     <p ref={ formErrMsg } className="text-danger text-center"></p>
 
-                    <a href="#" onClick={ changePage } className="text-primary py-4 text-center">Don't have an account? Sign up here</a>
+                    <a href="" onClick={ changePage } className="text-primary py-4 text-center">Don't have an account? Sign up here</a>
                 </div>
 
             </form>

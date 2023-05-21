@@ -18,10 +18,13 @@ db.once('open', () => console.log('Connected to MongoDB'));
 
 app.use(express.json());
 
+// valorant api routes
 const valorantRouter = require('./routes/valorantapi');
 app.use('/valorantapi', valorantRouter);
 
+// user routes
 const accountRouter = require('./routes/users');
 app.use('/users', accountRouter);
 
+// open server
 app.listen(3000, () => console.log('Server started'));

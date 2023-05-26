@@ -24,7 +24,7 @@ function dashboard(props) {
             console.log(valAccounts);
         }
 
-        else {
+        /*else {
             setValAccounts([
                 {
                     "name": "Tazio",
@@ -35,7 +35,7 @@ function dashboard(props) {
                     "tag": "NA1"
                 }
             ]);
-        }
+        }*/
 
         setShowStatsPage(false);
         console.log("dashboard useeffect");

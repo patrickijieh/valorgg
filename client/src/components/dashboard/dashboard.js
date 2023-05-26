@@ -27,8 +27,8 @@ function dashboard(props) {
         else {
             setValAccounts([
                 {
-                    "name": "tazio",
-                    "tag": "NA1"
+                    "name": "Tazio",
+                    "tag": "1693"
                 },
                 {
                     "name": "mothers milkerz",

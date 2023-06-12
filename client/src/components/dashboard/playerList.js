@@ -66,9 +66,7 @@ function playerList(props) {
                     <td>
                         <div className="d-flex flex-row">
                             <div className="d-flex flex-row flex-fill" onClick={(e) => handleNameClick(e, account)}>
-                                <a href="" className="fs-4 h6 text-light text-decoration-none">{account.name}</a>
-                                <a href="" className="fs-4 h6 fw-bold text-light px-1 text-decoration-none">#</a>
-                                <a href="" className="fs-4 h6 text-light text-decoration-none">{account.tag}</a>
+                                <a href="" className="fs-4 h6 text-light text-decoration-none">{account.name}#{account.tag}</a>
                             </div>
                             <div className="d-flex flex-row flex-fill justify-content-end">
                                 <button key={account.name} onClick={() => removeAccount(account)} className="btn btn-danger mx-2" disabled={inputDisabled}>Remove</button>

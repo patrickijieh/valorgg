@@ -1,0 +1,25 @@
+.agent-image {
+  width: 10%;
+  height: 30%;
+  border-radius: 50%;
+}
+
+.map-title{
+  width: 25%;
+}
+
+.player-name{
+  width: 80%;
+}
+
+.dashboard{
+  max-width: 100%;
+}
+
+.statistics{
+  width: 80%;
+}
+
+.title-card{
+  min-width: 80vw;
+}

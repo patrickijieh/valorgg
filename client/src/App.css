@@ -1,8 +1,21 @@
-.App-bgimage {
+.App {
+  min-height: 100dvh;
+  min-width: 80%;
+}
 
-  background-image: url('background-image.jpg');
+.App-bg {
+  min-width: 10%;
+  background-image: url('assets/background-image.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  
+}
+
+.App-contents {
+  position: relative;
+  margin-top: 50px;
+}
+
+.user-form {
+  min-width: 50%;
 }

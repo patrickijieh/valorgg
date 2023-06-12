@@ -3,10 +3,9 @@ import './App.css';
 import Login from './components/login.js';
 import Register from './components/signup.js';
 import Dashboard from './components/dashboard/dashboard.js';
-import logo from './valorantgg icon.png';
+import logo from './assets/valorantgg icon.png';
 
 function App() {
-
   const [doLogin, setLogin] = useState(false);
   const [doRegister, setRegister] = useState(false);
   const [doDash, setDash] = useState(false);
@@ -29,6 +28,11 @@ function App() {
 
   const pressDashboard = (event) => {
     event.preventDefault();
+    if (!userData)
+    {
+      alert("You must be logged in to access the dashboard.");
+      return;
+    }
     setLogin(false);
     setRegister(false);
     setDash(true);
@@ -53,7 +57,12 @@ function App() {
     setDash(false);
 
     document.title = "VALORGG";
+  }
 
+  const pressLogout = (event) => {
+    event.preventDefault();
+    setUserData(null);
+    location.reload();
   }
 
   const getUser = (user) => {
@@ -65,95 +74,98 @@ function App() {
 }
 
   return (
-
     /* APP BACKGROUND & NAVBAR */
-    <div className="App-bgimage min-vw-100 min-vh-100">
-      <div className="d-flex flex-column text-light">
+    <div className="d-flex flex-row">
 
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+      <div className="App-bg"></div>
 
-          <a className="navbar-brand" href="" onClick={pressHome}>VALORGG</a>
+      <div className="App bg-dark border border-dark h-100">
+        <div className="d-flex flex-column text-light">
 
-          <ul className="navbar-nav px-2">
-            <li className="nav-item active">
-              <a className="nav-link" href="" onClick={pressHome}>Home</a>
-            </li>
-          </ul>
+          <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3 fixed-top">
 
-          <ul className="navbar-nav mr-auto flex-fill">
-            <li className="nav-item">
-              <a className="nav-link" href="" onClick={pressDashboard}>Dashboard</a>
-            </li>
-          </ul>
+            <a className="navbar-brand px-1" href="" onClick={pressHome}>VALORGG</a>
 
-          {/* LOGOUT BUTTON (only appears if user is logged in)*/}
-          {
-            userData ? (
             <ul className="navbar-nav px-1">
-              <li className="nav-item justify-content-end">
-                <div className="flex-fill">
-                  <a className="nav-link" href="" onClick={pressHome}>Logout</a>
-                </div>
-             </li>
-            </ul>) : (false)
-          }
+              <li className="nav-item active">
+                <a className="nav-link" href="" onClick={pressHome}>Home</a>
+              </li>
+            </ul>
 
-        </nav>
+            <ul className="navbar-nav px-1">
+              <li className="nav-item">
+                <a className="nav-link" href="" onClick={pressDashboard}>Dashboard</a>
+              </li>
+            </ul>
 
+            <ul className="navbar-nav px-1 mr-auto flex-fill">
+              <li className="nav-item">
+                <a className="nav-link" href="" onClick={pressHome}>Search</a>
+              </li>
+            </ul>
+
+            {/* LOGOUT BUTTON (only appears if user is logged in)*/}
+
+            {
+              userData ? (
+              <ul className="navbar-nav">
+                <li className="nav-item justify-content-end">
+                  <div className="d-flex flex-row flex-fill">
+                    <span className="nav-link active px-2">{userData.username}</span>
+                    <a className="nav-link px-1" href="" onClick={pressLogout}>Logout</a>
+                  </div>
+              </li>
+              </ul>) : (false)
+            }
+
+          </nav>
         {/* APP CONTENT (main div)*/}
-        <div className="d-flex flex-column justify-content-center align-items-center min-vh-100">
+        <div className="App-contents d-flex flex-column justify-content-center align-items-center flex-fill">
+          { !doLogin ? (
+              !doRegister ? (
+                !doDash ? (
 
-    { !doLogin ? (
-      !doRegister ? (
-        !doDash ? (
-
-            /* HOME PAGE */
-            <div className="d-flex flex-column text-light justify-content-center align-items-center border border-dark rounded p-5 bg-dark" >
-              <h1 className="h2">VALORGG</h1>
-              <h3 className="h6 py-4">Track the match history of any Valorant account</h3>
-
-              <img src={logo} className="img-fluid w-25 h-25" alt="ValorGG Logo"/>
-
-              <div>
-                <button className="btn btn-danger px-4 m-3" onClick = {pressLogin}>
-                  Login
-                </button>
-
-                <button className="btn btn-danger px-4 m-3" onClick = {pressRegister}>
-                  Sign Up
-                </button>
-              </div>
-            </div>
-
-    ) : (
-
-      /* DASHBOARD PAGE */
-      <Dashboard userData={userData} updateUserData={updateUserData}/>
-
-    ) ) : ( 
-
-      /* REGISTER PAGE */
-    <Register updateRegister={updateRegister} updateLogin={updateLogin} goDash={goDash} getUser={getUser} />
-
-    ) ) : (
-
-      /* LOGIN PAGE */
-    <Login updateLogin={updateLogin} updateRegister={updateRegister} goDash={goDash} getUser={getUser}/>
-
-    ) }
-
+                /* HOME PAGE */
+                <div className="d-flex flex-column text-light justify-content-center align-items-center p-5 bg-dark h-100">
+                  <h1 className="h2">VALORGG</h1>
+                  <h3 className="text-center h6 py-4">Track the Competitive match history of any Valorant account</h3>
+                  <img src={logo} className="img-fluid w-50 h-50" alt="ValorGG Logo"/>
+                  <div className="d-flex flex-column justify-content-center align-items-center">
+                    <button className="btn btn-outline-danger px-5 m-3 text-center w-100" onClick={pressLogin}>
+                      Login
+                    </button>
+                    <button className="btn btn-outline-danger px-5 m-3 text-center w-100" onClick={pressRegister}>
+                      Sign Up
+                    </button>
+                  </div>
+                </div>
+                
+                ) : ( 
+                  /* DASHBOARD PAGE */
+                <Dashboard userData={userData} updateUserData={updateUserData} goDash={goDash}/>
+                )) : ( 
+                /* REGISTER PAGE */
+                <Register updateRegister={updateRegister} updateLogin={updateLogin} goDash={goDash} getUser={getUser}/>
+                )) : (
+                /* LOGIN PAGE */
+                <Login updateLogin={updateLogin} updateRegister={updateRegister} goDash={goDash} getUser={getUser}/>)
+          }
         </div>
 
-        {/* APP FOOTER */}
-        <footer className="d-inline-flex bg-dark text-light p-3">
-          <div>
-            <a href="https://github.com/patrickijieh/valorgg" target="_blank" className="h5 text-primary px-4">GitHub</a>
-          </div>
-          <div className="px-2">
-            Copyright &copy; Patrick Ijieh 2023
-          </div>
-        </footer>
+          {/* APP FOOTER */}
+          <footer className="d-flex flex-fill flex-row bg-dark text-light fixed-bottom p-3">
+            <div>
+              <a href="https://github.com/patrickijieh/valorgg" target="_blank" className="h5 text-primary px-2">GitHub</a>
+            </div>
+            <div className="px-2">
+              Copyright &copy; Patrick Ijieh 2023
+            </div>
+          </footer>
+        </div>
       </div>
+
+      <div className="App-bg"></div>
+
     </div>
   );
 }

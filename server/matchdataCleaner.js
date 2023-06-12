@@ -1,6 +1,11 @@
 const getMatchData = (matchObj) => {
   matchObj = matchObj.data;
 
+  if (!matchObj) {
+    console.log("NULL DATA");
+    return null;
+  }
+
   const sanitizedData = matchObj.map((match) => {
     const sanitizedMatch = {
       "metadata" : match.metadata,

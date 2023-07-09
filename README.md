@@ -12,8 +12,14 @@ A user's username and saved Valorant accounts are stored in the database in plai
 ![image](https://github.com/patrickijieh/valorgg/assets/123503029/da788191-1281-470c-b3c3-2dbea851986f)<br><br>
 
 #### Hashing function
-![image](https://github.com/patrickijieh/valorgg/assets/123503029/0c01c716-944b-43fd-a4b5-6cad6b775901)<br>
-![image](https://github.com/patrickijieh/valorgg/assets/123503029/a72f358e-a885-402a-ab6f-ca2dd8dbc40e)
+```js
+const bcrypt = require('bcrypt');
+
+async function hashPassword(pword) {
+    const hash = await bcrypt.hash(pword, 10);
+    return hash;
+}
+```
 
 ## Credits
 Made by Patrick Ijieh (May 2023).
